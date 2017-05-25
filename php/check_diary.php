@@ -4,7 +4,7 @@
   $_SESSION['login_member_id']= 1;
 
   if (!isset($_SESSION['join'])) {
-    header('Location:login.php');
+    header('Location:newdia.php');
     exit();
   }
 
@@ -19,15 +19,15 @@
       try{
 
       $sql='INSERT INTO `diary` SET `diary_id`=?, `title`=?, `user_id`=?, `content`=?, `created`=NOW()'; //1
-      $data= array($diary_id, $title, $_SESSION['login_member_id'], $content);// 2
+      $data= array(null,$title, $_SESSION['login_member_id'], $content);// 2
       $stmt= $dbh->prepare($sql);//3
       $stmt->execute($data);//4
       // SESSIONの情報を削除
-      unset($_SESSION['join']);
+      // unset($_SESSION['join']);
 
       header('Location:kadai.php');
       exit();
-      }catch(PDOException $e){
+      }catch(PDOException $e){//例外が起きた時
       echo 'SQL文実行時エラー: ' . $e->getMessage();
       exit();
     }

@@ -34,10 +34,29 @@
         $sql = 'SELECT*FROM `diary` WHERE `user_id`=?';
         $data = array($_SESSION['login_member_id']); // ここにはいった数字がWHEREの条件
         $stmt = $dbh->prepare($sql);
-        $stmt->execute($data); // objectからarrayに
+        $stmt->execute($data); // objectからarrayに 
+
+          if(!empty($_POST)){
+            $sql= 'DELETE FROM `diary` WHERE `diary_id`=?';
+            $data2 = array($_POST['diary_id']);
+            $stmt2 = $dbh->prepare($sql);
+            $stmt2->execute($data2); // objectからarrayに
+            header('Location:kadai.php') ;
+            exit();
+          }
+
+
         
         // echo $record['title'];
         //var_dump($record);
+
+
+       // $sql = 'DELETE FROM `diary` WHERE`diary_id`=?';
+       // $data = array();
+       // $stmt = $dbh->prepare($sql);
+       // $stmt->execute($data2); // ()内に指定した配列とSQL文がリンクする
+       // $stmt = $dbh->prepare($sql);//準備
+       // $stmt-> execute($data); //()内に指定した配列とSQL文がリンクする
 
 ?>
 
@@ -50,6 +69,31 @@
     <title>kadai</title>
     <link href="../css/kadai.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+    <script type="text/javascript">
+    <!--
+
+    function disp(){
+
+      // 「OK」時の処理開始 ＋ 確認ダイアログの表示
+      if(window.confirm('削除します、よろしいですか？')){
+
+        location.href = "example_confirm.html"; // example_confirm.html へジャンプ
+
+      }
+      // 「OK」時の処理終了
+
+      // 「キャンセル」時の処理開始
+      else{
+
+        window.alert('キャンセルされました'); // 警告ダイアログを表示
+
+      }
+      // 「キャンセル」時の処理終了
+
+    }
+
+    // -->
+    </script>
   </head>
   <body>
     <div id="header">
@@ -110,14 +154,22 @@
             </div>
             <div><a type="submit" href="newdiary.php">新規日記追加</a></div>
           </div>
+        <!-- <form> -->
         <div id="c-box">
           <?php while($records = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
               <div class="msg">
               <a href="" ><?php echo $records['title']; ?></a>
               <p class="day"><?php echo $records['created']; ?></p>
+              <form method="POST" action="">
+                <input type="submit" value="削除" onClick="disp()">
+                <input type="hidden" name="diary_id" value="<?php  echo $records['diary_id']; ?>">
+              </form>
               </div>
           <?php endwhile; ?>
+
+          
         </div>
+        <!-- </form> -->
        </div>
       </div>
      <div id="footer">
@@ -125,3 +177,7 @@
       </div>
   </body>
   </html>
+
+  <!-- <form method="POST" action="">
+    <input type="botton" name= "diary_id" value="削除">
+  </form> -->
