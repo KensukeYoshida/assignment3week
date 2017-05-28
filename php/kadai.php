@@ -31,7 +31,7 @@
     // echo '<br>';
 
      //タイトルと日付の表示 
-        $sql = 'SELECT*FROM `diary` WHERE `user_id`=?';
+        $sql = 'SELECT*FROM `diary` WHERE `user_id`=? ORDER BY `created` DESC';
         $data = array($_SESSION['login_member_id']); // ここにはいった数字がWHEREの条件
         $stmt = $dbh->prepare($sql);
         $stmt->execute($data); // objectからarrayに 
@@ -69,31 +69,7 @@
     <title>kadai</title>
     <link href="../css/kadai.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
-    <script type="text/javascript">
-    <!--
-
-    function disp(){
-
-      // 「OK」時の処理開始 ＋ 確認ダイアログの表示
-      if(window.confirm('削除します、よろしいですか？')){
-
-        location.href = "example_confirm.html"; // example_confirm.html へジャンプ
-
-      }
-      // 「OK」時の処理終了
-
-      // 「キャンセル」時の処理開始
-      else{
-
-        window.alert('キャンセルされました'); // 警告ダイアログを表示
-
-      }
-      // 「キャンセル」時の処理終了
-
-    }
-
-    // -->
-    </script>
+    
   </head>
   <body>
     <div id="header">
@@ -160,8 +136,9 @@
               <div class="msg">
               <a href="" ><?php echo $records['title']; ?></a>
               <p class="day"><?php echo $records['created']; ?></p>
-              <form method="POST" action="">
-                <input type="submit" value="削除" onClick="disp()">
+              <form method="POST" action="" onsubmit="return submitChk()">
+                <input type="submit" value="削除" style="color: red;">
+                <!-- <input type="submit" value="削除"> -->
                 <input type="hidden" name="diary_id" value="<?php  echo $records['diary_id']; ?>">
               </form>
               </div>
@@ -175,6 +152,18 @@
      <div id="footer">
         <footer>Copywrite@kensuke yoshida</footer>    
       </div>
+
+      <script type="text/javascript">
+
+        // * 確認ダイアログの返り値によりフォーム送信
+        // */
+        function submitChk () {
+            /* 確認ダイアログ表示 */
+            var flag = confirm ( "本当に削除してもいいですか?\n\n削除されない方はキャンセルボタンを押してください");
+            /* send_flg が TRUEなら送信、FALSEなら送信しない */
+            return flag;
+        }
+        </script>
   </body>
   </html>
 

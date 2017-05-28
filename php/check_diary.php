@@ -8,9 +8,9 @@
     exit();
   }
 
-  echo '<pre>';
-  var_dump($_SESSION['join']);
-  echo '</pre>';
+  // echo '<pre>';
+  // var_dump($_SESSION['join']);
+  // echo '</pre>';
 
       // 完了ボタンを押した時
     if (!empty($_POST)) {
