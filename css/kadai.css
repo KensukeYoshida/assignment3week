@@ -90,3 +90,10 @@ body {
 
 }
 
+#submit_button{
+  /* 幅と高さを指定*/
+    width: 57px;
+    height: 24px;
+    font-size: 15px;
+}
+

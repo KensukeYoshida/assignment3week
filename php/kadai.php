@@ -137,7 +137,7 @@
               <a href="" ><?php echo $records['title']; ?></a>
               <p class="day"><?php echo $records['created']; ?></p>
               <form method="POST" action="" onsubmit="return submitChk()">
-                <input type="submit" value="削除" style="color: red;">
+                <input id="submit_button" type="submit" value="削除" style="color: red;">
                 <!-- <input type="submit" value="削除"> -->
                 <input type="hidden" name="diary_id" value="<?php  echo $records['diary_id']; ?>">
               </form>
